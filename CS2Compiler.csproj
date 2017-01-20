@@ -132,9 +132,12 @@
       <CustomToolNamespace>CS2Compiler</CustomToolNamespace>
       <Visitor>True</Visitor>
       <Listener>True</Listener>
-      <Abstract>True</Abstract>
+      <Abstract>False</Abstract>
     </Antlr4>
     <None Include="packages.config" />
+    <None Include="sqrt.cs2">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

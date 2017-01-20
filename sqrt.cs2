@@ -1,0 +1,38 @@
+
+void Main(string[] args)
+{
+    RunSqrt();
+}
+private void RunSqrt()
+{
+    double A, B;
+    double E = 0.01;
+    for (int i = 0; i <= 100; i++)
+    {
+        if (i < 2)
+        {
+            B = i;
+        }
+        else
+        {
+            A = (0.5 * i);
+            B = (A * A + i) / (2 * A);
+            while (Abs(A - B) > E)
+            {
+                A = B;
+                B = (A * A + i) / (2 * A);
+            }
+        }
+        WriteLine(B);
+    }
+}
+public double Abs(double input)
+{
+    double toReturn = input;
+    if (input < 0)
+    {
+        toReturn = -input;
+    }
+
+    return toReturn;
+}

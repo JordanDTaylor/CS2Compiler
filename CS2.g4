@@ -5,7 +5,7 @@ grammar CS2;
  */
 
 program
-	: (function_declaration | declaration ';')* EOF
+	: (function_declaration | declaration ';')*
 	;
 
 declaration 
@@ -61,8 +61,7 @@ parameter
 	;
 
 assignment
-	: (declaration
-	| ID) '=' evaluatable ';'
+	: (declaration | ID) '=' evaluatable ';'
 	;
 
 evaluatable
@@ -96,13 +95,11 @@ relop
 	;
 
 expression   
-	: multiplyingExpression ((PLUS
-	| MINUS) multiplyingExpression)*  
+	: multiplyingExpression ((PLUS | MINUS) multiplyingExpression)*  
 	;
 
 multiplyingExpression   
-	: atom ((STAR
-	| DIV) atom)*
+	: atom ((STAR | DIV) atom)*
 	;
 
 atom
@@ -113,9 +110,9 @@ atom
 	;
 
 constant 
-	: (REAL
+	: REAL 
 	| char_constant
-	| string_constant)
+	| string_constant
 	;
 
 char_constant
@@ -123,13 +120,11 @@ char_constant
 	;
 
 string_constant
-	: '"'(REAL
-	| LETTER)+'"'
+	: '"'(REAL | LETTER)+'"'
 	;
 
 function_call 
-	: ID '(' (argument?
-	| argument (',' argument)* ) ')'
+	: ID '(' (argument? | argument (',' argument)* ) ')'
 	;
 
 argument
@@ -152,13 +147,12 @@ type
 	: TYPE_VOID
 	| TYPE_INT
 	| TYPE_DOUBLE
+	| TYPE_STRING
 	| arrayType
 	;
 
 arrayType
-	: (TYPE_INT
-	| TYPE_DOUBLE
-	| TYPE_STRING)'[]'
+	: (TYPE_INT	| TYPE_DOUBLE | TYPE_STRING) '[]'
 	;
 
 
