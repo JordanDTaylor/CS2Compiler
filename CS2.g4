@@ -1,19 +1,19 @@
-grammar CS2;
+    grammar CS2;
 
 /*
  * Parser Rules
  */
 
 program
-	: (function_declaration | declaration ';')*
+	: (function_declaration | declaration SEMICOLON)*
 	;
 
 declaration 
-	: type ID (',' ID)*
+	: type ID (COMMA ID)*
 	;
 
 function_declaration
-	: mod? type ID '(' parameter_list ')' block 
+	: mod? type ID OPEN_PAREN parameter_list CLOSE_PAREN block 
 	;
 
 mod
@@ -24,8 +24,8 @@ mod
 statement
 	: for_loop
 	| while_loop
-	| (function_call ';')
-	| (declaration ';')
+	| (function_call SEMICOLON)
+	| (declaration SEMICOLON)
 	| assignment
 	| block
 	| if_statement
@@ -33,23 +33,23 @@ statement
 	;
 
 return_statement
-	: RETURN evaluatable? ';'
+	: RETURN evaluatable? SEMICOLON
 	;
 
 block
-	: '{' statement* '}'
+	: OPEN_BRACE statement* CLOSE_BRACE
 	;
 
 if_statement
-	: IF '(' evaluatable ')' block (ELSE block)?
+	: IF OPEN_PAREN evaluatable CLOSE_PAREN block (ELSE block)?
 	;
 
 for_loop
-	: 'for' '(' assignment evaluatable ';' evaluatable ')' block
+	: FOR OPEN_PAREN assignment evaluatable SEMICOLON evaluatable CLOSE_PAREN block
 	;
 
 while_loop
-	: 'while' '(' evaluatable ')' block
+	: WHILE OPEN_PAREN evaluatable CLOSE_PAREN block
 	;
 
 parameter_list
@@ -61,7 +61,7 @@ parameter
 	;
 
 assignment
-	: (declaration | ID) '=' evaluatable ';'
+	: (declaration | ID) ASSIGNMENT evaluatable SEMICOLON
 	;
 
 evaluatable
@@ -105,7 +105,7 @@ multiplyingExpression
 atom
 	: REAL
 	| ID
-	| '(' expression ')'
+	| OPEN_PAREN expression CLOSE_PAREN
 	| function_call
 	;
 
@@ -116,15 +116,15 @@ constant
 	;
 
 char_constant
-	: '\''LETTER'\''
+	: SINGLE_QUOTE LETTER SINGLE_QUOTE
 	;
 
 string_constant
-	: '"'(REAL | LETTER)+'"'
+	: DOUBLE_QOUTE (REAL | LETTER)+ DOUBLE_QOUTE
 	;
 
 function_call 
-	: ID '(' (argument? | argument (',' argument)* ) ')'
+	: ID OPEN_PAREN (argument? | argument (COMMA argument)* ) CLOSE_PAREN
 	;
 
 argument
@@ -134,13 +134,13 @@ argument
 	;
 
 pre_unary_operator
-	: '-'
+	: MINUS
 	| post_unary_operator
 	;
 
 post_unary_operator
-	: '++'
-	| '--'
+	: OP_INC
+	| OP_DEC
 	;
 
 type 
@@ -152,7 +152,7 @@ type
 	;
 
 arrayType
-	: (TYPE_INT	| TYPE_DOUBLE | TYPE_STRING) '[]'
+	: (TYPE_INT	| TYPE_DOUBLE | TYPE_STRING) OPEN_BRACKET CLOSE_BRACKET
 	;
 
 
@@ -181,8 +181,16 @@ PRIVATE:            'private';
 PROTECTED:          'protected';
 PUBLIC:             'public';
 
-
-//SEMICOLON:                ';';
+SINGLE_QUOTE:             '\'';
+DOUBLE_QOUTE:             '"';
+COMMA:                    ',';
+OPEN_BRACKET:             '[';
+CLOSE_BRACKET:            ']';
+OPEN_PAREN:               '(';
+CLOSE_PAREN:		  ')';
+OPEN_BRACE:               '{';
+CLOSE_BRACE:              '}';
+SEMICOLON:                ';';
 PLUS:                     '+';
 MINUS:                    '-';
 STAR:                     '*';
@@ -193,7 +201,7 @@ BITWISE_OR:               '|';
 CARET:                    '^';
 BANG:                     '!';
 TILDE:                    '~';
-//ASSIGNMENT:               '=';
+ASSIGNMENT:               '=';
 LT:                       '<';
 GT:                       '>';
 INTERR:                   '?';
