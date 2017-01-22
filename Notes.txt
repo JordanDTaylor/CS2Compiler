@@ -1,0 +1,7 @@
+﻿
+ANTLR Listeners and Visitors
+
+	The biggest difference between listeners and visitors is that listener methods
+	aren’t responsible for explicitly calling methods to walk their children. Visitors,
+	on the other hand, must explicitly trigger visits to child nodes to keep the
+	tree traversal going.
