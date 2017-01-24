@@ -31,16 +31,33 @@ namespace CS2Compiler
             CS2Lexer cs2Lexer = new CS2Lexer(inputStream);
             CommonTokenStream commonTokenStream = new CommonTokenStream(cs2Lexer);
             CS2Parser cs2Parser = new CS2Parser(commonTokenStream);
-            CS2Parser.ArgumentContext rContext = cs2Parser.argument();
+            CS2Parser.ProgramContext rContext = cs2Parser.program();
             MyVisitor visitor = new MyVisitor();
             visitor.Visit(rContext);
         }
     }
 
-    internal class MyVisitor {
-        public void Visit(CS2Parser.ArgumentContext rContext)
+    internal class MyVisitor 
+    {
+        public void Visit(CS2Parser.ProgramContext rContext)
         {
-            Console.WriteLine(rContext);
+            Console.WriteLine(rContext.ToStringTree());
         }
+
+//        public void Visit(IParseTree node)
+//        {
+//            if (node.Payload.GetType() == typeof(IToken))
+//            {
+//                var token = node.Payload as IToken;
+//                Console.WriteLine($"{token.Type}: {token.Text}");
+//            }
+//            else if (node.Payload.GetType() == typeof(RuleContext))
+//            {
+//                var ruleContext = node.Payload as RuleContext;
+//                
+//                Console.WriteLine($"RULE CONTEXT:{ruleContext.}");
+//            }
+//
+//        }
     }
 }

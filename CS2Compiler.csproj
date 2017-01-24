@@ -122,6 +122,7 @@
     <Compile Include="CS2.g4.parser.cs">
       <DependentUpon>CS2.g4</DependentUpon>
     </Compile>
+    <Compile Include="EvaluatorWithProps.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
