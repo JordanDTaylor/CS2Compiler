@@ -124,6 +124,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Context.cs" />
+    <Compile Include="EvalVisitor_Trevan.cs" />
     <Compile Include="gen\CS2BaseListener.cs" />
     <Compile Include="gen\CS2BaseVisitor.cs" />
     <Compile Include="gen\CS2Lexer.cs" />
@@ -132,6 +133,7 @@
     <Compile Include="gen\CS2Visitor.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Relop.cs" />
     <Compile Include="TypedVariable.cs" />
   </ItemGroup>
   <ItemGroup>
