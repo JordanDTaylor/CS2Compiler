@@ -3,6 +3,7 @@ using Antlr4.Runtime.Tree;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Threading.Tasks;
 using static CS2Parser;
 
 namespace Syntax
@@ -11,10 +12,14 @@ namespace Syntax
 	{
 		static void Main(string[] args)
 		{
-			new Program().RunParser();
+			Program program = new Program();
+
+			ITree tree = program.RunParser();
+			Dictionary<string, ITree> methods = program.MethodDiscovery(tree);
+			program.Execute(tree, methods, new Context<string, TypedVariable>());
 		}
 
-		private void RunParser()
+		private ITree RunParser()
 		{
 			AntlrInputStream inputStream = new AntlrInputStream(File.ReadAllText("sqrt.cs2"));
 			CS2Lexer cs2Lexer = new CS2Lexer(inputStream);
@@ -23,10 +28,12 @@ namespace Syntax
 			CS2Parser cs2Parser = new CS2Parser(commonTokenStream);
 			ProgramContext pContext = cs2Parser.program();
 
-			Enumerate(pContext, 0, new Context<string, TypedVariable>());
+			Validate(pContext, 0, new Context<string, TypedVariable>());
+
+			return pContext;
 		}
 
-		private void Enumerate(ITree root, int indent, Context<string, TypedVariable> context)
+		private void Validate(ITree root, int indent, Context<string, TypedVariable> context)
 		{
 			Console.WriteLine(new string('-', indent) +
 				root.Payload.GetType() + " " + (root.Payload is IToken ? ((IToken)root.Payload).Text : root.Payload));
@@ -37,6 +44,13 @@ namespace Syntax
 				context.PushFrame();
 			}
 
+			for (int i = 0; i < root.ChildCount; i++)
+			{
+				ITree child = root.GetChild(i);
+				Validate(child, indent + 1, context);
+			}
+
+
 			if (root.GetType() == typeof(ParameterContext))
 				HandleParameterContext((ParameterContext)root, context);
 			else if (root.GetType() == typeof(DeclarationContext))
@@ -44,16 +58,9 @@ namespace Syntax
 				if (!HandleDeclarationContext((DeclarationContext)root, context))
 					Console.WriteLine("Duplicate declaration");
 			}
-
-			for (int i = 0; i < root.ChildCount; i++)
-			{
-				ITree child = root.GetChild(i);
-				Enumerate(child, indent + 1, context);
-			}
-
 			// Run this after the enumeration so that declarations are proccessed
 			// before assignments
-			if (root.GetType() == typeof(AssignmentContext))
+			else if (root.GetType() == typeof(AssignmentContext))
 			{
 				if (!EvaluateAssignmentContext((AssignmentContext)root, context))
 					Console.WriteLine("Invalid assignment");
@@ -225,6 +232,117 @@ namespace Syntax
 			}
 
 			return true;
+		}
+
+		private Dictionary<string, ITree> MethodDiscovery(ITree root)
+		{
+			Dictionary<string, ITree> result = new Dictionary<string, ITree>();
+
+			for (int i = 0; i < root.ChildCount; i++)
+			{
+				ITree node = root.GetChild(i);
+
+				if (node.GetType() == typeof(Function_declarationContext))
+				{
+					for (int j = 0; j < node.ChildCount; j++)
+					{
+						ITree sub = node.GetChild(j);
+
+						if (sub.Payload.GetType() == typeof(CommonToken))
+						{
+							result.Add(((CommonToken)sub.Payload).Text, node);
+							break;
+						}
+					}
+				}
+			}
+
+			return result;
+		}
+
+		private void Execute(ITree root, Dictionary<string, ITree> methods, Context<string, TypedVariable> context)
+		{
+			if (root.GetType() == typeof(Function_declarationContext) ||
+				root.GetType() == typeof(BlockContext))
+			{
+				context.PushFrame();
+			}
+
+			for (int i = 0; i < root.ChildCount; i++)
+				Execute(root.GetChild(i), methods, context);
+
+			if (root.GetType() == typeof(DeclarationContext))
+			{
+				DeclarationContext((DeclarationContext)root, (type, name) =>
+				{
+					context.AddToCurrent(name, new TypedVariable() { Type = type, Name = name });
+				});
+			}
+			else if (root.GetType() == typeof(AssignmentContext))
+			{
+				string name;
+
+				ITree child0 = root.GetChild(0);
+
+				if (child0.Payload.GetType() == typeof(DeclarationContext))
+					name = ((CommonToken)child0.GetChild(child0.ChildCount - 1).Payload).Text;
+				else
+					name = ((CommonToken)child0.Payload).Text;
+
+				EvaluatableContext evaluatable = (EvaluatableContext)root.GetChild(1);
+
+				context.GetEffective()[name].Value = Evaluate(evaluatable, context);
+			}
+
+
+			if (root.GetType() == typeof(Function_callContext))
+			{
+
+			}
+
+			if (root.GetType() == typeof(Function_declarationContext) ||
+				root.GetType() == typeof(BlockContext))
+			{
+				context.PopFrame();
+			}
+		}
+
+		private object Evaluate(EvaluatableContext evaluatable, Context<string, TypedVariable> context)
+		{
+			ITree child0 = evaluatable.GetChild(0);
+			Type child0Type = child0.GetType();
+
+			if (child0Type == typeof(ConstantContext))
+				return ((CommonToken)child0.GetChild(0).Payload).Text;
+			else if (child0Type == typeof(CommonToken))
+				return context.GetEffective()[((CommonToken)child0.Payload).Text].Value;
+			else if (child0Type == typeof(OperationContext))
+				return Evaluate((OperationContext)child0.Payload, context);
+
+			throw new Exception();
+		}
+
+		private object Evaluate(OperationContext operation, Context<string, TypedVariable> context)
+		{
+
+
+			return null;
+		}
+
+		private object Evaluate(Unary_operationContext operation, Context<string, TypedVariable> context)
+		{
+			ITree child0 = operation.GetChild(0);
+
+			if (child0.GetType() == typeof(Pre_unary_operatorContext))
+			{
+
+			}
+			else
+			{
+
+			}
+
+			return null;
 		}
 
 		/*
