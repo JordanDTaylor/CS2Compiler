@@ -278,6 +278,7 @@ namespace Syntax
 					context.AddToCurrent(name, new TypedVariable() { Type = type, Name = name });
 				});
 			}
+            /*
 			else if (root.GetType() == typeof(AssignmentContext))
 			{
 				string name;
@@ -293,7 +294,7 @@ namespace Syntax
 
 				context.GetEffective()[name].Value = Evaluate(evaluatable, context);
 			}
-
+            */
 
 			if (root.GetType() == typeof(Function_callContext))
 			{
