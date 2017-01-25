@@ -124,6 +124,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Context.cs" />
+    <Compile Include="CS2VisitorImpl.cs" />
     <Compile Include="gen\CS2BaseListener.cs" />
     <Compile Include="gen\CS2BaseVisitor.cs" />
     <Compile Include="gen\CS2Lexer.cs" />

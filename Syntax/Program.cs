@@ -15,8 +15,8 @@ namespace Syntax
 			Program program = new Program();
 
 			ITree tree = program.RunParser();
-			Dictionary<string, ITree> methods = program.MethodDiscovery(tree);
-			program.Execute(tree, methods, new Context<string, TypedVariable>());
+			//Dictionary<string, ITree> methods = program.MethodDiscovery(tree);
+			//program.Execute(tree, methods, new Context<string, TypedVariable>());
 		}
 
 		private ITree RunParser()
@@ -36,7 +36,7 @@ namespace Syntax
 		private void Validate(ITree root, int indent, Context<string, TypedVariable> context)
 		{
 			Console.WriteLine(new string('-', indent) +
-				root.Payload.GetType() + " " + (root.Payload is IToken ? ((IToken)root.Payload).Text : root.Payload));
+				root.GetType() + " " + root.ToString());// (root.Payload is IToken ? ((IToken)root.Payload).Text : root.Payload));
 
 			if (root.GetType() == typeof(Function_declarationContext) ||
 				root.GetType() == typeof(BlockContext))

@@ -1,0 +1,335 @@
+CS2Parser+ProgramContext []
+-CS2Parser+Function_declarationContext [60]
+--CS2Parser+TypeContext [81 60]
+---Antlr4.Runtime.Tree.TerminalNodeImpl void
+--Antlr4.Runtime.Tree.TerminalNodeImpl Main
+--Antlr4.Runtime.Tree.TerminalNodeImpl (
+--CS2Parser+Parameter_listContext [84 60]
+---CS2Parser+ParameterContext [143 84 60]
+----CS2Parser+TypeContext [146 143 84 60]
+-----CS2Parser+ArrayTypeContext [256 146 143 84 60]
+------Antlr4.Runtime.Tree.TerminalNodeImpl string
+------Antlr4.Runtime.Tree.TerminalNodeImpl [
+------Antlr4.Runtime.Tree.TerminalNodeImpl ]
+----Antlr4.Runtime.Tree.TerminalNodeImpl args
+--Antlr4.Runtime.Tree.TerminalNodeImpl )
+--CS2Parser+BlockContext [86 60]
+---Antlr4.Runtime.Tree.TerminalNodeImpl {
+---CS2Parser+StatementContext [111 86 60]
+----CS2Parser+Function_callContext [92 111 86 60]
+-----Antlr4.Runtime.Tree.TerminalNodeImpl RunSqrt
+-----Antlr4.Runtime.Tree.TerminalNodeImpl (
+-----Antlr4.Runtime.Tree.TerminalNodeImpl )
+----Antlr4.Runtime.Tree.TerminalNodeImpl ;
+---Antlr4.Runtime.Tree.TerminalNodeImpl }
+-CS2Parser+Function_declarationContext [60]
+--CS2Parser+ModContext [78 60]
+---Antlr4.Runtime.Tree.TerminalNodeImpl private
+--CS2Parser+TypeContext [81 60]
+---Antlr4.Runtime.Tree.TerminalNodeImpl void
+--Antlr4.Runtime.Tree.TerminalNodeImpl RunSqrt
+--Antlr4.Runtime.Tree.TerminalNodeImpl (
+--CS2Parser+Parameter_listContext [84 60]
+--Antlr4.Runtime.Tree.TerminalNodeImpl )
+--CS2Parser+BlockContext [86 60]
+---Antlr4.Runtime.Tree.TerminalNodeImpl {
+---CS2Parser+StatementContext [111 86 60]
+----CS2Parser+DeclarationContext [95 111 86 60]
+-----CS2Parser+TypeContext [69 95 111 86 60]
+------Antlr4.Runtime.Tree.TerminalNodeImpl double
+-----Antlr4.Runtime.Tree.TerminalNodeImpl A
+-----Antlr4.Runtime.Tree.TerminalNodeImpl ,
+-----Antlr4.Runtime.Tree.TerminalNodeImpl B
+----Antlr4.Runtime.Tree.TerminalNodeImpl ;
+---CS2Parser+StatementContext [111 86 60]
+----CS2Parser+AssignmentContext [98 111 86 60]
+-----CS2Parser+DeclarationContext [149 98 111 86 60]
+------CS2Parser+TypeContext [69 149 98 111 86 60]
+-------Antlr4.Runtime.Tree.TerminalNodeImpl double
+------Antlr4.Runtime.Tree.TerminalNodeImpl E
+-----Antlr4.Runtime.Tree.TerminalNodeImpl =
+-----CS2Parser+EvaluatableContext [154 98 111 86 60]
+------CS2Parser+ConstantContext [158 154 98 111 86 60]
+-------Antlr4.Runtime.Tree.TerminalNodeImpl 0.01
+-----Antlr4.Runtime.Tree.TerminalNodeImpl ;
+---CS2Parser+StatementContext [111 86 60]
+----CS2Parser+For_loopContext [90 111 86 60]
+-----Antlr4.Runtime.Tree.TerminalNodeImpl for
+-----Antlr4.Runtime.Tree.TerminalNodeImpl (
+-----CS2Parser+AssignmentContext [130 90 111 86 60]
+------CS2Parser+DeclarationContext [149 130 90 111 86 60]
+-------CS2Parser+TypeContext [69 149 130 90 111 86 60]
+--------Antlr4.Runtime.Tree.TerminalNodeImpl int
+-------Antlr4.Runtime.Tree.TerminalNodeImpl i
+------Antlr4.Runtime.Tree.TerminalNodeImpl =
+------CS2Parser+EvaluatableContext [154 130 90 111 86 60]
+-------CS2Parser+ConstantContext [158 154 130 90 111 86 60]
+--------Antlr4.Runtime.Tree.TerminalNodeImpl 0
+------Antlr4.Runtime.Tree.TerminalNodeImpl ;
+-----CS2Parser+EvaluatableContext [131 90 111 86 60]
+------CS2Parser+OperationContext [160 131 90 111 86 60]
+-------CS2Parser+Relational_operationContext [164 160 131 90 111 86 60]
+--------CS2Parser+ExpressionContext [176 164 160 131 90 111 86 60]
+---------CS2Parser+MultiplyingExpressionContext [182 176 164 160 131 90 111 86 60]
+----------CS2Parser+AtomContext [190 182 176 164 160 131 90 111 86 60]
+-----------Antlr4.Runtime.Tree.TerminalNodeImpl i
+--------CS2Parser+RelopContext [177 164 160 131 90 111 86 60]
+---------Antlr4.Runtime.Tree.TerminalNodeImpl <=
+--------CS2Parser+ExpressionContext [178 164 160 131 90 111 86 60]
+---------CS2Parser+MultiplyingExpressionContext [182 178 164 160 131 90 111 86 60]
+----------CS2Parser+AtomContext [190 182 178 164 160 131 90 111 86 60]
+-----------Antlr4.Runtime.Tree.TerminalNodeImpl 100
+-----Antlr4.Runtime.Tree.TerminalNodeImpl ;
+-----CS2Parser+EvaluatableContext [133 90 111 86 60]
+------CS2Parser+OperationContext [160 133 90 111 86 60]
+-------CS2Parser+Unary_operationContext [163 160 133 90 111 86 60]
+--------CS2Parser+ExpressionContext [171 163 160 133 90 111 86 60]
+---------CS2Parser+MultiplyingExpressionContext [182 171 163 160 133 90 111 86 60]
+----------CS2Parser+AtomContext [190 182 171 163 160 133 90 111 86 60]
+-----------Antlr4.Runtime.Tree.TerminalNodeImpl i
+--------CS2Parser+Post_unary_operatorContext [172 163 160 133 90 111 86 60]
+---------Antlr4.Runtime.Tree.TerminalNodeImpl ++
+-----Antlr4.Runtime.Tree.TerminalNodeImpl )
+-----CS2Parser+BlockContext [135 90 111 86 60]
+------Antlr4.Runtime.Tree.TerminalNodeImpl {
+------CS2Parser+StatementContext [111 135 90 111 86 60]
+-------CS2Parser+If_statementContext [100 111 135 90 111 86 60]
+--------Antlr4.Runtime.Tree.TerminalNodeImpl if
+--------Antlr4.Runtime.Tree.TerminalNodeImpl (
+--------CS2Parser+EvaluatableContext [121 100 111 135 90 111 86 60]
+---------CS2Parser+OperationContext [160 121 100 111 135 90 111 86 60]
+----------CS2Parser+Relational_operationContext [164 160 121 100 111 135 90 111 86 60]
+-----------CS2Parser+ExpressionContext [176 164 160 121 100 111 135 90 111 86 60]
+------------CS2Parser+MultiplyingExpressionContext [182 176 164 160 121 100 111 135 90 111 86 60]
+-------------CS2Parser+AtomContext [190 182 176 164 160 121 100 111 135 90 111 86 60]
+--------------Antlr4.Runtime.Tree.TerminalNodeImpl i
+-----------CS2Parser+RelopContext [177 164 160 121 100 111 135 90 111 86 60]
+------------Antlr4.Runtime.Tree.TerminalNodeImpl <
+-----------CS2Parser+ExpressionContext [178 164 160 121 100 111 135 90 111 86 60]
+------------CS2Parser+MultiplyingExpressionContext [182 178 164 160 121 100 111 135 90 111 86 60]
+-------------CS2Parser+AtomContext [190 182 178 164 160 121 100 111 135 90 111 86 60]
+--------------Antlr4.Runtime.Tree.TerminalNodeImpl 2
+--------Antlr4.Runtime.Tree.TerminalNodeImpl )
+--------CS2Parser+BlockContext [123 100 111 135 90 111 86 60]
+---------Antlr4.Runtime.Tree.TerminalNodeImpl {
+---------CS2Parser+StatementContext [111 123 100 111 135 90 111 86 60]
+----------CS2Parser+AssignmentContext [98 111 123 100 111 135 90 111 86 60]
+-----------Antlr4.Runtime.Tree.TerminalNodeImpl B
+-----------Antlr4.Runtime.Tree.TerminalNodeImpl =
+-----------CS2Parser+EvaluatableContext [154 98 111 123 100 111 135 90 111 86 60]
+------------Antlr4.Runtime.Tree.TerminalNodeImpl i
+-----------Antlr4.Runtime.Tree.TerminalNodeImpl ;
+---------Antlr4.Runtime.Tree.TerminalNodeImpl }
+--------Antlr4.Runtime.Tree.TerminalNodeImpl else
+--------CS2Parser+BlockContext [125 100 111 135 90 111 86 60]
+---------Antlr4.Runtime.Tree.TerminalNodeImpl {
+---------CS2Parser+StatementContext [111 125 100 111 135 90 111 86 60]
+----------CS2Parser+AssignmentContext [98 111 125 100 111 135 90 111 86 60]
+-----------Antlr4.Runtime.Tree.TerminalNodeImpl A
+-----------Antlr4.Runtime.Tree.TerminalNodeImpl =
+-----------CS2Parser+EvaluatableContext [154 98 111 125 100 111 135 90 111 86 60]
+------------CS2Parser+OperationContext [160 154 98 111 125 100 111 135 90 111 86 60]
+-------------CS2Parser+ExpressionContext [165 160 154 98 111 125 100 111 135 90 111 86 60]
+--------------CS2Parser+MultiplyingExpressionContext [182 165 160 154 98 111 125 100 111 135 90 111 86 60]
+---------------CS2Parser+AtomContext [190 182 165 160 154 98 111 125 100 111 135 90 111 86 60]
+----------------Antlr4.Runtime.Tree.TerminalNodeImpl (
+----------------CS2Parser+ExpressionContext [201 190 182 165 160 154 98 111 125 100 111 135 90 111 86 60]
+-----------------CS2Parser+MultiplyingExpressionContext [182 201 190 182 165 160 154 98 111 125 100 111 135 90 111 86 60]
+------------------CS2Parser+AtomContext [190 182 201 190 182 165 160 154 98 111 125 100 111 135 90 111 86 60]
+-------------------Antlr4.Runtime.Tree.TerminalNodeImpl 0.5
+------------------Antlr4.Runtime.Tree.TerminalNodeImpl *
+------------------CS2Parser+AtomContext [192 182 201 190 182 165 160 154 98 111 125 100 111 135 90 111 86 60]
+-------------------Antlr4.Runtime.Tree.TerminalNodeImpl i
+----------------Antlr4.Runtime.Tree.TerminalNodeImpl )
+-----------Antlr4.Runtime.Tree.TerminalNodeImpl ;
+---------CS2Parser+StatementContext [111 125 100 111 135 90 111 86 60]
+----------CS2Parser+AssignmentContext [98 111 125 100 111 135 90 111 86 60]
+-----------Antlr4.Runtime.Tree.TerminalNodeImpl B
+-----------Antlr4.Runtime.Tree.TerminalNodeImpl =
+-----------CS2Parser+EvaluatableContext [154 98 111 125 100 111 135 90 111 86 60]
+------------CS2Parser+OperationContext [160 154 98 111 125 100 111 135 90 111 86 60]
+-------------CS2Parser+ExpressionContext [165 160 154 98 111 125 100 111 135 90 111 86 60]
+--------------CS2Parser+MultiplyingExpressionContext [182 165 160 154 98 111 125 100 111 135 90 111 86 60]
+---------------CS2Parser+AtomContext [190 182 165 160 154 98 111 125 100 111 135 90 111 86 60]
+----------------Antlr4.Runtime.Tree.TerminalNodeImpl (
+----------------CS2Parser+ExpressionContext [201 190 182 165 160 154 98 111 125 100 111 135 90 111 86 60]
+-----------------CS2Parser+MultiplyingExpressionContext [182 201 190 182 165 160 154 98 111 125 100 111 135 90 111 86 60]
+------------------CS2Parser+AtomContext [190 182 201 190 182 165 160 154 98 111 125 100 111 135 90 111 86 60]
+-------------------Antlr4.Runtime.Tree.TerminalNodeImpl A
+------------------Antlr4.Runtime.Tree.TerminalNodeImpl *
+------------------CS2Parser+AtomContext [192 182 201 190 182 165 160 154 98 111 125 100 111 135 90 111 86 60]
+-------------------Antlr4.Runtime.Tree.TerminalNodeImpl A
+-----------------Antlr4.Runtime.Tree.TerminalNodeImpl +
+-----------------CS2Parser+MultiplyingExpressionContext [184 201 190 182 165 160 154 98 111 125 100 111 135 90 111 86 60]
+------------------CS2Parser+AtomContext [190 184 201 190 182 165 160 154 98 111 125 100 111 135 90 111 86 60]
+-------------------Antlr4.Runtime.Tree.TerminalNodeImpl i
+----------------Antlr4.Runtime.Tree.TerminalNodeImpl )
+---------------Antlr4.Runtime.Tree.TerminalNodeImpl /
+---------------CS2Parser+AtomContext [192 182 165 160 154 98 111 125 100 111 135 90 111 86 60]
+----------------Antlr4.Runtime.Tree.TerminalNodeImpl (
+----------------CS2Parser+ExpressionContext [201 192 182 165 160 154 98 111 125 100 111 135 90 111 86 60]
+-----------------CS2Parser+MultiplyingExpressionContext [182 201 192 182 165 160 154 98 111 125 100 111 135 90 111 86 60]
+------------------CS2Parser+AtomContext [190 182 201 192 182 165 160 154 98 111 125 100 111 135 90 111 86 60]
+-------------------Antlr4.Runtime.Tree.TerminalNodeImpl 2
+------------------Antlr4.Runtime.Tree.TerminalNodeImpl *
+------------------CS2Parser+AtomContext [192 182 201 192 182 165 160 154 98 111 125 100 111 135 90 111 86 60]
+-------------------Antlr4.Runtime.Tree.TerminalNodeImpl A
+----------------Antlr4.Runtime.Tree.TerminalNodeImpl )
+-----------Antlr4.Runtime.Tree.TerminalNodeImpl ;
+---------CS2Parser+StatementContext [111 125 100 111 135 90 111 86 60]
+----------CS2Parser+While_loopContext [91 111 125 100 111 135 90 111 86 60]
+-----------Antlr4.Runtime.Tree.TerminalNodeImpl while
+-----------Antlr4.Runtime.Tree.TerminalNodeImpl (
+-----------CS2Parser+EvaluatableContext [139 91 111 125 100 111 135 90 111 86 60]
+------------CS2Parser+OperationContext [160 139 91 111 125 100 111 135 90 111 86 60]
+-------------CS2Parser+Relational_operationContext [164 160 139 91 111 125 100 111 135 90 111 86 60]
+--------------CS2Parser+ExpressionContext [176 164 160 139 91 111 125 100 111 135 90 111 86 60]
+---------------CS2Parser+MultiplyingExpressionContext [182 176 164 160 139 91 111 125 100 111 135 90 111 86 60]
+----------------CS2Parser+AtomContext [190 182 176 164 160 139 91 111 125 100 111 135 90 111 86 60]
+-----------------CS2Parser+Function_callContext [204 190 182 176 164 160 139 91 111 125 100 111 135 90 111 86 60]
+------------------Antlr4.Runtime.Tree.TerminalNodeImpl Abs
+------------------Antlr4.Runtime.Tree.TerminalNodeImpl (
+------------------CS2Parser+ArgumentContext [226 204 190 182 176 164 160 139 91 111 125 100 111 135 90 111 86 60]
+-------------------CS2Parser+OperationContext [242 226 204 190 182 176 164 160 139 91 111 125 100 111 135 90 111 86 60]
+--------------------CS2Parser+ExpressionContext [165 242 226 204 190 182 176 164 160 139 91 111 125 100 111 135 90 111 86 60]
+---------------------CS2Parser+MultiplyingExpressionContext [182 165 242 226 204 190 182 176 164 160 139 91 111 125 100 111 135 90 111 86 60]
+----------------------CS2Parser+AtomContext [190 182 165 242 226 204 190 182 176 164 160 139 91 111 125 100 111 135 90 111 86 60]
+-----------------------Antlr4.Runtime.Tree.TerminalNodeImpl A
+---------------------Antlr4.Runtime.Tree.TerminalNodeImpl -
+---------------------CS2Parser+MultiplyingExpressionContext [184 165 242 226 204 190 182 176 164 160 139 91 111 125 100 111 135 90 111 86 60]
+----------------------CS2Parser+AtomContext [190 184 165 242 226 204 190 182 176 164 160 139 91 111 125 100 111 135 90 111 86 60]
+-----------------------Antlr4.Runtime.Tree.TerminalNodeImpl B
+------------------Antlr4.Runtime.Tree.TerminalNodeImpl )
+--------------CS2Parser+RelopContext [177 164 160 139 91 111 125 100 111 135 90 111 86 60]
+---------------Antlr4.Runtime.Tree.TerminalNodeImpl >
+--------------CS2Parser+ExpressionContext [178 164 160 139 91 111 125 100 111 135 90 111 86 60]
+---------------CS2Parser+MultiplyingExpressionContext [182 178 164 160 139 91 111 125 100 111 135 90 111 86 60]
+----------------CS2Parser+AtomContext [190 182 178 164 160 139 91 111 125 100 111 135 90 111 86 60]
+-----------------Antlr4.Runtime.Tree.TerminalNodeImpl E
+-----------Antlr4.Runtime.Tree.TerminalNodeImpl )
+-----------CS2Parser+BlockContext [141 91 111 125 100 111 135 90 111 86 60]
+------------Antlr4.Runtime.Tree.TerminalNodeImpl {
+------------CS2Parser+StatementContext [111 141 91 111 125 100 111 135 90 111 86 60]
+-------------CS2Parser+AssignmentContext [98 111 141 91 111 125 100 111 135 90 111 86 60]
+--------------Antlr4.Runtime.Tree.TerminalNodeImpl A
+--------------Antlr4.Runtime.Tree.TerminalNodeImpl =
+--------------CS2Parser+EvaluatableContext [154 98 111 141 91 111 125 100 111 135 90 111 86 60]
+---------------Antlr4.Runtime.Tree.TerminalNodeImpl B
+--------------Antlr4.Runtime.Tree.TerminalNodeImpl ;
+------------CS2Parser+StatementContext [111 141 91 111 125 100 111 135 90 111 86 60]
+-------------CS2Parser+AssignmentContext [98 111 141 91 111 125 100 111 135 90 111 86 60]
+--------------Antlr4.Runtime.Tree.TerminalNodeImpl B
+--------------Antlr4.Runtime.Tree.TerminalNodeImpl =
+--------------CS2Parser+EvaluatableContext [154 98 111 141 91 111 125 100 111 135 90 111 86 60]
+---------------CS2Parser+OperationContext [160 154 98 111 141 91 111 125 100 111 135 90 111 86 60]
+----------------CS2Parser+ExpressionContext [165 160 154 98 111 141 91 111 125 100 111 135 90 111 86 60]
+-----------------CS2Parser+MultiplyingExpressionContext [182 165 160 154 98 111 141 91 111 125 100 111 135 90 111 86 60]
+------------------CS2Parser+AtomContext [190 182 165 160 154 98 111 141 91 111 125 100 111 135 90 111 86 60]
+-------------------Antlr4.Runtime.Tree.TerminalNodeImpl (
+-------------------CS2Parser+ExpressionContext [201 190 182 165 160 154 98 111 141 91 111 125 100 111 135 90 111 86 60]
+--------------------CS2Parser+MultiplyingExpressionContext [182 201 190 182 165 160 154 98 111 141 91 111 125 100 111 135 90 111 86 60]
+---------------------CS2Parser+AtomContext [190 182 201 190 182 165 160 154 98 111 141 91 111 125 100 111 135 90 111 86 60]
+----------------------Antlr4.Runtime.Tree.TerminalNodeImpl A
+---------------------Antlr4.Runtime.Tree.TerminalNodeImpl *
+---------------------CS2Parser+AtomContext [192 182 201 190 182 165 160 154 98 111 141 91 111 125 100 111 135 90 111 86 60]
+----------------------Antlr4.Runtime.Tree.TerminalNodeImpl A
+--------------------Antlr4.Runtime.Tree.TerminalNodeImpl +
+--------------------CS2Parser+MultiplyingExpressionContext [184 201 190 182 165 160 154 98 111 141 91 111 125 100 111 135 90 111 86 60]
+---------------------CS2Parser+AtomContext [190 184 201 190 182 165 160 154 98 111 141 91 111 125 100 111 135 90 111 86 60]
+----------------------Antlr4.Runtime.Tree.TerminalNodeImpl i
+-------------------Antlr4.Runtime.Tree.TerminalNodeImpl )
+------------------Antlr4.Runtime.Tree.TerminalNodeImpl /
+------------------CS2Parser+AtomContext [192 182 165 160 154 98 111 141 91 111 125 100 111 135 90 111 86 60]
+-------------------Antlr4.Runtime.Tree.TerminalNodeImpl (
+-------------------CS2Parser+ExpressionContext [201 192 182 165 160 154 98 111 141 91 111 125 100 111 135 90 111 86 60]
+--------------------CS2Parser+MultiplyingExpressionContext [182 201 192 182 165 160 154 98 111 141 91 111 125 100 111 135 90 111 86 60]
+---------------------CS2Parser+AtomContext [190 182 201 192 182 165 160 154 98 111 141 91 111 125 100 111 135 90 111 86 60]
+----------------------Antlr4.Runtime.Tree.TerminalNodeImpl 2
+---------------------Antlr4.Runtime.Tree.TerminalNodeImpl *
+---------------------CS2Parser+AtomContext [192 182 201 192 182 165 160 154 98 111 141 91 111 125 100 111 135 90 111 86 60]
+----------------------Antlr4.Runtime.Tree.TerminalNodeImpl A
+-------------------Antlr4.Runtime.Tree.TerminalNodeImpl )
+--------------Antlr4.Runtime.Tree.TerminalNodeImpl ;
+------------Antlr4.Runtime.Tree.TerminalNodeImpl }
+---------Antlr4.Runtime.Tree.TerminalNodeImpl }
+------CS2Parser+StatementContext [111 135 90 111 86 60]
+-------CS2Parser+Function_callContext [92 111 135 90 111 86 60]
+--------Antlr4.Runtime.Tree.TerminalNodeImpl WriteLine
+--------Antlr4.Runtime.Tree.TerminalNodeImpl (
+--------CS2Parser+ArgumentContext [226 92 111 135 90 111 86 60]
+---------CS2Parser+OperationContext [242 226 92 111 135 90 111 86 60]
+----------CS2Parser+ExpressionContext [165 242 226 92 111 135 90 111 86 60]
+-----------CS2Parser+MultiplyingExpressionContext [182 165 242 226 92 111 135 90 111 86 60]
+------------CS2Parser+AtomContext [190 182 165 242 226 92 111 135 90 111 86 60]
+-------------Antlr4.Runtime.Tree.TerminalNodeImpl B
+--------Antlr4.Runtime.Tree.TerminalNodeImpl )
+-------Antlr4.Runtime.Tree.TerminalNodeImpl ;
+------Antlr4.Runtime.Tree.TerminalNodeImpl }
+---Antlr4.Runtime.Tree.TerminalNodeImpl }
+-CS2Parser+Function_declarationContext [60]
+--CS2Parser+ModContext [78 60]
+---Antlr4.Runtime.Tree.TerminalNodeImpl public
+--CS2Parser+TypeContext [81 60]
+---Antlr4.Runtime.Tree.TerminalNodeImpl double
+--Antlr4.Runtime.Tree.TerminalNodeImpl Abs
+--Antlr4.Runtime.Tree.TerminalNodeImpl (
+--CS2Parser+Parameter_listContext [84 60]
+---CS2Parser+ParameterContext [143 84 60]
+----CS2Parser+TypeContext [146 143 84 60]
+-----Antlr4.Runtime.Tree.TerminalNodeImpl double
+----Antlr4.Runtime.Tree.TerminalNodeImpl input
+--Antlr4.Runtime.Tree.TerminalNodeImpl )
+--CS2Parser+BlockContext [86 60]
+---Antlr4.Runtime.Tree.TerminalNodeImpl {
+---CS2Parser+StatementContext [111 86 60]
+----CS2Parser+AssignmentContext [98 111 86 60]
+-----CS2Parser+DeclarationContext [149 98 111 86 60]
+------CS2Parser+TypeContext [69 149 98 111 86 60]
+-------Antlr4.Runtime.Tree.TerminalNodeImpl double
+------Antlr4.Runtime.Tree.TerminalNodeImpl toReturn
+-----Antlr4.Runtime.Tree.TerminalNodeImpl =
+-----CS2Parser+EvaluatableContext [154 98 111 86 60]
+------Antlr4.Runtime.Tree.TerminalNodeImpl input
+-----Antlr4.Runtime.Tree.TerminalNodeImpl ;
+---CS2Parser+StatementContext [111 86 60]
+----CS2Parser+If_statementContext [100 111 86 60]
+-----Antlr4.Runtime.Tree.TerminalNodeImpl if
+-----Antlr4.Runtime.Tree.TerminalNodeImpl (
+-----CS2Parser+EvaluatableContext [121 100 111 86 60]
+------CS2Parser+OperationContext [160 121 100 111 86 60]
+-------CS2Parser+Relational_operationContext [164 160 121 100 111 86 60]
+--------CS2Parser+ExpressionContext [176 164 160 121 100 111 86 60]
+---------CS2Parser+MultiplyingExpressionContext [182 176 164 160 121 100 111 86 60]
+----------CS2Parser+AtomContext [190 182 176 164 160 121 100 111 86 60]
+-----------Antlr4.Runtime.Tree.TerminalNodeImpl input
+--------CS2Parser+RelopContext [177 164 160 121 100 111 86 60]
+---------Antlr4.Runtime.Tree.TerminalNodeImpl <
+--------CS2Parser+ExpressionContext [178 164 160 121 100 111 86 60]
+---------CS2Parser+MultiplyingExpressionContext [182 178 164 160 121 100 111 86 60]
+----------CS2Parser+AtomContext [190 182 178 164 160 121 100 111 86 60]
+-----------Antlr4.Runtime.Tree.TerminalNodeImpl 0
+-----Antlr4.Runtime.Tree.TerminalNodeImpl )
+-----CS2Parser+BlockContext [123 100 111 86 60]
+------Antlr4.Runtime.Tree.TerminalNodeImpl {
+------CS2Parser+StatementContext [111 123 100 111 86 60]
+-------CS2Parser+AssignmentContext [98 111 123 100 111 86 60]
+--------Antlr4.Runtime.Tree.TerminalNodeImpl toReturn
+--------Antlr4.Runtime.Tree.TerminalNodeImpl =
+--------CS2Parser+EvaluatableContext [154 98 111 123 100 111 86 60]
+---------CS2Parser+OperationContext [160 154 98 111 123 100 111 86 60]
+----------CS2Parser+Unary_operationContext [163 160 154 98 111 123 100 111 86 60]
+-----------CS2Parser+Pre_unary_operatorContext [168 163 160 154 98 111 123 100 111 86 60]
+------------Antlr4.Runtime.Tree.TerminalNodeImpl -
+-----------CS2Parser+ExpressionContext [169 163 160 154 98 111 123 100 111 86 60]
+------------CS2Parser+MultiplyingExpressionContext [182 169 163 160 154 98 111 123 100 111 86 60]
+-------------CS2Parser+AtomContext [190 182 169 163 160 154 98 111 123 100 111 86 60]
+--------------Antlr4.Runtime.Tree.TerminalNodeImpl input
+--------Antlr4.Runtime.Tree.TerminalNodeImpl ;
+------Antlr4.Runtime.Tree.TerminalNodeImpl }
+---CS2Parser+StatementContext [111 86 60]
+----CS2Parser+Return_statementContext [101 111 86 60]
+-----Antlr4.Runtime.Tree.TerminalNodeImpl return
+-----CS2Parser+EvaluatableContext [105 101 111 86 60]
+------Antlr4.Runtime.Tree.TerminalNodeImpl toReturn
+-----Antlr4.Runtime.Tree.TerminalNodeImpl ;
+---Antlr4.Runtime.Tree.TerminalNodeImpl }
