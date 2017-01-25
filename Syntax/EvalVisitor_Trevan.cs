@@ -20,7 +20,31 @@ namespace Syntax
         /// <return>The visitor result.</return>
         public override Object VisitRelational_operation([NotNull] CS2Parser.Relational_operationContext context)
         {
-            return VisitChildren(context);
+            Boolean ret;
+            Relop op = (Relop)Visit(context.children[1]);
+            Object left = Visit(context.children[0]);
+            Object right = Visit(context.children[2]);
+            switch (op)
+            {
+                case Relop.EQ:
+                    ret = left.Equals(right);
+                    break;
+                case Relop.LT:
+                    ret = ((IComparable)left).CompareTo(right) < 0;
+                    break;
+                case Relop.GT:
+                    ret = ((IComparable)left).CompareTo(right) > 0;
+                    break;
+                case Relop.LE:
+                    ret = ((IComparable)left).CompareTo(right) <= 0;
+                    break;
+                case Relop.GE:
+                    ret = ((IComparable)left).CompareTo(right) >= 0;
+                    break;
+                default:
+                    throw new Exception("Unsupported relational operator: "+op);
+            }
+            return ret;
         }
         /// <summary>
         /// Visit a parse tree produced by <see cref="CS2Parser.relop"/>.
