@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Syntax
 {
-    partial class EvalVisitor : CS2BaseVisitor<Object>
+    partial class EvalVisitor : CS2BaseVisitor<System.Object>
     {
         /// <summary>
         /// Visit a parse tree produced by <see cref="CS2Parser.relational_operation"/>.
@@ -18,12 +18,12 @@ namespace Syntax
         /// </summary>
         /// <param name="context">The parse tree.</param>
         /// <return>The visitor result.</return>
-        public override Object VisitRelational_operation([NotNull] CS2Parser.Relational_operationContext context)
+        public override System.Object VisitRelational_operation([NotNull] CS2Parser.Relational_operationContext context)
         {
             Boolean ret;
             Relop op = (Relop)Visit(context.children[1]);
-            Object left = Visit(context.children[0]);
-            Object right = Visit(context.children[2]);
+            System.Object left = Visit(context.children[0]);
+            System.Object right = Visit(context.children[2]);
             switch (op)
             {
                 case Relop.EQ:
@@ -55,7 +55,7 @@ namespace Syntax
         /// </summary>
         /// <param name="context">The parse tree.</param>
         /// <return>The visitor result.</return>
-        public override Object VisitRelop([NotNull] CS2Parser.RelopContext context)
+        public override System.Object VisitRelop([NotNull] CS2Parser.RelopContext context)
         {
             switch (context.children[0].GetText())
             {
@@ -82,7 +82,7 @@ namespace Syntax
         /// </summary>
         /// <param name="context">The parse tree.</param>
         /// <return>The visitor result.</return>
-        public override Object VisitExpression([NotNull] CS2Parser.ExpressionContext context)
+        public override System.Object VisitExpression([NotNull] CS2Parser.ExpressionContext context)
         {
             //TODO: 
             return VisitChildren(context);
@@ -96,7 +96,7 @@ namespace Syntax
         /// </summary>
         /// <param name="context">The parse tree.</param>
         /// <return>The visitor result.</return>
-        public override Object VisitMultiplyingExpression([NotNull] CS2Parser.MultiplyingExpressionContext context)
+        public override System.Object VisitMultiplyingExpression([NotNull] CS2Parser.MultiplyingExpressionContext context)
         {
             //TODO: 
             return VisitChildren(context);
@@ -110,7 +110,7 @@ namespace Syntax
         /// </summary>
         /// <param name="context">The parse tree.</param>
         /// <return>The visitor result.</return>
-        public override Object VisitAtom([NotNull] CS2Parser.AtomContext context)
+        public override System.Object VisitAtom([NotNull] CS2Parser.AtomContext context)
         {
             //TODO: 
             return VisitChildren(context);
@@ -124,7 +124,7 @@ namespace Syntax
         /// </summary>
         /// <param name="context">The parse tree.</param>
         /// <return>The visitor result.</return>
-        public override Object VisitConstant([NotNull] CS2Parser.ConstantContext context)
+        public override System.Object VisitConstant([NotNull] CS2Parser.ConstantContext context)
         {
             return Double.Parse(context.children[0].GetText());
         }
@@ -137,7 +137,7 @@ namespace Syntax
         /// </summary>
         /// <param name="context">The parse tree.</param>
         /// <return>The visitor result.</return>
-        public override Object VisitChar_constant([NotNull] CS2Parser.Char_constantContext context)
+        public override System.Object VisitChar_constant([NotNull] CS2Parser.Char_constantContext context)
         {
             return context.children[0].GetText()[0];
         }
