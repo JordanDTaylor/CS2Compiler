@@ -84,8 +84,38 @@ namespace Syntax
         /// <return>The visitor result.</return>
         public override Object VisitExpression([NotNull] CS2Parser.ExpressionContext context)
         {
-            //TODO: 
-            return VisitChildren(context);
+            Object result = Visit(context.children[0]);
+            for(int i=2; i<context.children.Count; i+=2)
+            {
+                string op = context.children[i - 1].GetText();
+                Object right = Visit(context.children[i]);
+                switch (op)
+                {
+                    case "+":
+                        if (result.GetType() == typeof(string))
+                        {
+                            result += (string)right;
+                        }
+                        else
+                        {
+                            result = ((Double)result) + (Double)right;
+                        }
+                        break;
+                    case "-":
+                        if (result.GetType() == typeof(string))
+                        {
+                            result += (string)right;
+                        }
+                        else
+                        {
+                            result = ((Double)result) + (Double)right;
+                        }
+                        break;
+                    default:
+                        throw new Exception("Unsupported ADD/SUB operator: " + op);
+                }
+            }
+            return result;
         }
         /// <summary>
         /// Visit a parse tree produced by <see cref="CS2Parser.multiplyingExpression"/>.
@@ -98,7 +128,23 @@ namespace Syntax
         /// <return>The visitor result.</return>
         public override Object VisitMultiplyingExpression([NotNull] CS2Parser.MultiplyingExpressionContext context)
         {
-            //TODO: 
+            Double result = (Double)Visit(context.children[0]);
+            for(int i=2; i<context.children.Count; i += 2)
+            {
+                string op = context.children[i-1].GetText();
+                Double right = (Double)Visit(context.children[i]);
+                switch (op)
+                {
+                    case "*":
+                        result *= right;
+                        break;
+                    case "/":
+                        result /= right;
+                        break;
+                    default:
+                        throw new Exception("Unsupported MULT/DIV operator: "+op);
+                }
+            }
             return VisitChildren(context);
         }
         /// <summary>
@@ -112,8 +158,11 @@ namespace Syntax
         /// <return>The visitor result.</return>
         public override Object VisitAtom([NotNull] CS2Parser.AtomContext context)
         {
-            //TODO: 
-            return VisitChildren(context);
+            if (context.children.Count > 1)
+            {
+                return Visit(context.children[1]);
+            }
+            return Visit(context.children[0]);
         }
         /// <summary>
         /// Visit a parse tree produced by <see cref="CS2Parser.constant"/>.
