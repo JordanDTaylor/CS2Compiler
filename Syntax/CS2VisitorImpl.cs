@@ -92,9 +92,13 @@ namespace Syntax
 
 		public override Result VisitBlock([NotNull] BlockContext context)
 		{
+			contextHolder.PushFrame();
+
 			// Skip the open and closing braces
 			for (int i = 1; i < context.ChildCount - 1; i++)
 				VisitStatement(context.GetChild<StatementContext>(i));
+
+			contextHolder.PopFrame();
 
 			return default(Result);
 		}
