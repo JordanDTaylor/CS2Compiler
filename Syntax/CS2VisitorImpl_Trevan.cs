@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Syntax
 {
-    partial class EvalVisitor : CS2BaseVisitor<Object>
+    partial class CS2VisitorImpl : CS2BaseVisitor<Object>
     {
         /// <summary>
         /// Visit a parse tree produced by <see cref="CS2Parser.relational_operation"/>.
@@ -162,7 +162,16 @@ namespace Syntax
             {
                 return Visit(context.children[1]);
             }
-            return Visit(context.children[0]);
+            double d;
+            if (double.TryParse(context.children[0].GetText(), out d))
+            {
+                return d;
+            }
+            if (context.children[0].GetType() == typeof(CS2Parser.Function_callContext))
+            {
+                return Visit(context.children[0]);
+            }
+            return contextHolder.GetEffective()[context.children[0].GetText()];
         }
         /// <summary>
         /// Visit a parse tree produced by <see cref="CS2Parser.constant"/>.
@@ -175,6 +184,10 @@ namespace Syntax
         /// <return>The visitor result.</return>
         public override Object VisitConstant([NotNull] CS2Parser.ConstantContext context)
         {
+            if (context.children[0].GetType() == typeof(CS2Parser.Char_constantContext) || context.children[0].GetType()==typeof(CS2Parser.String_constantContext))
+            {
+                return Visit(context.children[0]);
+            }
             return Double.Parse(context.children[0].GetText());
         }
         /// <summary>
@@ -188,7 +201,7 @@ namespace Syntax
         /// <return>The visitor result.</return>
         public override Object VisitChar_constant([NotNull] CS2Parser.Char_constantContext context)
         {
-            return context.children[0].GetText()[0];
+            return context.children[1].GetText()[0];
         }
 
     }
