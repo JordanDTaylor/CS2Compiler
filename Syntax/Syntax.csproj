@@ -126,6 +126,8 @@
     <Compile Include="Context.cs" />
     <Compile Include="CS2VisitorImpl_j.cs" />
     <Compile Include="CS2VisitorImpl.cs" />
+    <Compile Include="CS2VisitorImpl_Trevan.cs" />
+    <Compile Include="CS2VisitorImpl_Landon.cs" />
     <Compile Include="EvalVisitor_Trevan.cs" />
     <Compile Include="gen\CS2BaseListener.cs" />
     <Compile Include="gen\CS2BaseVisitor.cs" />
