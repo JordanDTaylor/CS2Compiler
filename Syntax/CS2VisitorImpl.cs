@@ -14,7 +14,7 @@ namespace Syntax
 
 		public override Result VisitDeclaration([NotNull] DeclarationContext context)
 		{
-			string type = context.GetChild(0).GetChild(0).ToString();
+			string type = VisitType(context.GetChild<TypeContext>(0)).ToString();
 
 			for (int i = 1; i < context.ChildCount; i++)
 			{
@@ -40,7 +40,7 @@ namespace Syntax
 				index++;
 			}
 
-			string type = context.GetChild(index++).GetChild(0).ToString();
+			string type = VisitType(context.GetChild<TypeContext>(index++)).ToString();
 			string name = context.GetChild(index++).ToString();
 
 			functionHolder.Add(name, context);
@@ -92,9 +92,13 @@ namespace Syntax
 
 		public override Result VisitBlock([NotNull] BlockContext context)
 		{
+			contextHolder.PushFrame();
+
 			// Skip the open and closing braces
 			for (int i = 1; i < context.ChildCount - 1; i++)
 				VisitStatement(context.GetChild<StatementContext>(i));
+
+			contextHolder.PopFrame();
 
 			return default(Result);
 		}
@@ -112,6 +116,6 @@ namespace Syntax
 			}
 
 			return default(Result);
-		}	
+		}
 	}
 }
