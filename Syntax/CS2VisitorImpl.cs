@@ -7,12 +7,22 @@ using static CS2Parser;
 
 namespace Syntax
 {
-	partial class CS2VisitorImpl<Result> : CS2BaseVisitor<Result>
+	partial class CS2VisitorImpl : CS2BaseVisitor<object>
 	{
 		private Context<string, TypedVariable> contextHolder = new Context<string, TypedVariable>();
-		private Dictionary<string, ITree> functionHolder = new Dictionary<string, ITree>();
+		private Dictionary<string, IParseTree> functionHolder = new Dictionary<string, IParseTree>();
 
-		public override Result VisitDeclaration([NotNull] DeclarationContext context)
+		public override object VisitProgram([NotNull] ProgramContext context)
+		{
+			for (int i = 0; i < context.ChildCount; i++)
+				Visit(context.GetChild(i));
+
+			// TODO: Call functionHolder["Main"]
+
+			return default(object);
+		}
+
+		public override object VisitDeclaration([NotNull] DeclarationContext context)
 		{
 			string type = VisitType(context.GetChild<TypeContext>(0)).ToString();
 
@@ -27,10 +37,10 @@ namespace Syntax
 				}
 			}
 
-			return default(Result);
+			return default(object);
 		}
 
-		public override Result VisitFunction_declaration([NotNull] Function_declarationContext context)
+		public override object VisitFunction_declaration([NotNull] Function_declarationContext context)
 		{
 			int index = 0;
 
@@ -45,17 +55,17 @@ namespace Syntax
 
 			functionHolder.Add(name, context);
 
-			return default(Result);
+			return default(object);
 		}
 
-		public override Result VisitMod([NotNull] ModContext context)
+		public override object VisitMod([NotNull] ModContext context)
 		{
 			string mod = context.GetChild(0).ToString();
 
-			return default(Result);
+			return default(object);
 		}
 
-		public override Result VisitStatement([NotNull] StatementContext context)
+		public override object VisitStatement([NotNull] StatementContext context)
 		{
 			RuleContext child0 = context.GetChild<RuleContext>(0);
 			Type child0Type = child0.GetType();
@@ -80,17 +90,17 @@ namespace Syntax
 			throw new InvalidOperationException();
 		}
 
-		public override Result VisitReturn_statement([NotNull] Return_statementContext context)
+		public override object VisitReturn_statement([NotNull] Return_statementContext context)
 		{
 			RuleContext child1 = context.GetChild<RuleContext>(1);
 
 			if (child1 is EvaluatableContext)
 				return VisitEvaluatable((EvaluatableContext)child1);
 
-			return default(Result);
+			return default(object);
 		}
 
-		public override Result VisitBlock([NotNull] BlockContext context)
+		public override object VisitBlock([NotNull] BlockContext context)
 		{
 			contextHolder.PushFrame();
 
@@ -100,10 +110,10 @@ namespace Syntax
 
 			contextHolder.PopFrame();
 
-			return default(Result);
+			return default(object);
 		}
 
-		public override Result VisitIf_statement([NotNull] If_statementContext context)
+		public override object VisitIf_statement([NotNull] If_statementContext context)
 		{
 			EvaluatableContext evaluatable = context.GetChild<EvaluatableContext>(2);
 
@@ -115,7 +125,7 @@ namespace Syntax
 					VisitBlock(context.GetChild<BlockContext>(6));
 			}
 
-			return default(Result);
+			return default(object);
 		}
 	}
 }
