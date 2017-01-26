@@ -35,7 +35,7 @@ namespace Syntax
 
 		private void Validate(ITree root, int indent, Context<string, TypedVariable> context)
 		{
-			//CS2VisitorImpl<object> visitor = new CS2VisitorImpl<object>();
+			//CS2VisitorImpl visitor = new CS2VisitorImpl();
 			//visitor.Visit((IParseTree)root);
 
 			Console.WriteLine(new string('-', indent) +
