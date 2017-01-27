@@ -14,7 +14,9 @@ namespace Syntax
 
         public override object VisitFunction_call(CS2Parser.Function_callContext context)
         {
-            return null;
+            var id = context.ID();
+            CS2Parser.Function_declarationContext function = (CS2Parser.Function_declarationContext) functionHolder[id.GetText()];
+            return Visit(function.block());
         }
 
         public override object VisitArgument(CS2Parser.ArgumentContext context)
