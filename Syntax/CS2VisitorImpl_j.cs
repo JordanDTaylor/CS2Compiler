@@ -33,11 +33,15 @@ namespace Syntax
                 arguments.Add(value);
             }
 
-            return ExecuteFunction(id.GetText(), arguments);
+            return ExecuteFunction(id.GetText(), arguments.ToArray());
         }
 
         public object ExecuteFunction(string functionName, params object[] arguments)
         {
+
+            if (functionName.Equals("WriteLine"))
+                Console.WriteLine(arguments);
+
             object returnValue;
             var function = (CS2Parser.Function_declarationContext) functionHolder[functionName];
             contextHolder.PushFrame();

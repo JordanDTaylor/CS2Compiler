@@ -17,7 +17,7 @@ namespace Syntax
 			for (int i = 0; i < context.ChildCount; i++)
 				Visit(context.GetChild(i));
 
-			// TODO: Call functionHolder["Main"]
+		    ExecuteFunction("Main", new string[0]);
 
 			return default(object);
 		}
