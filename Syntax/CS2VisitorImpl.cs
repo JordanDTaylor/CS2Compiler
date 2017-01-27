@@ -24,7 +24,7 @@ namespace Syntax
 
 		public override object VisitDeclaration([NotNull] DeclarationContext context)
 		{
-			string type = VisitType(context.GetChild<TypeContext>(0)).ToString();
+			string type = VisitType((TypeContext)context.GetChild(0)).ToString();
 			string name = null;
 
 			for (int i = 1; i < context.ChildCount; i++)
@@ -47,11 +47,11 @@ namespace Syntax
 
 			if (context.GetChild(index) is ModContext)
 			{
-				VisitMod(context.GetChild<ModContext>(index));
+				VisitMod((ModContext)context.GetChild(index));
 				index++;
 			}
 
-			string type = VisitType(context.GetChild<TypeContext>(index++)).ToString();
+			string type = VisitType((TypeContext)context.GetChild(index++)).ToString();
 			string name = context.GetChild(index++).ToString();
 
 			functionHolder.Add(name, context);
@@ -66,7 +66,7 @@ namespace Syntax
 
 		public override object VisitStatement([NotNull] StatementContext context)
 		{
-			RuleContext child0 = context.GetChild<RuleContext>(0);
+			RuleContext child0 = (RuleContext)context.GetChild(0);
 			Type child0Type = child0.GetType();
 
 			if (child0Type == typeof(For_loopContext))
@@ -91,7 +91,7 @@ namespace Syntax
 
 		public override object VisitReturn_statement([NotNull] Return_statementContext context)
 		{
-			RuleContext child1 = context.GetChild<RuleContext>(1);
+			RuleContext child1 = (RuleContext)context.GetChild(1);
 
 			if (child1 is EvaluatableContext)
 				return VisitEvaluatable((EvaluatableContext)child1);
@@ -108,7 +108,7 @@ namespace Syntax
 			// Skip the open and closing braces
 			for (int i = 1; i < context.ChildCount - 1; i++)
 			{
-				result = VisitStatement(context.GetChild<StatementContext>(i));
+				result = VisitStatement((StatementContext)context.GetChild(i));
 
 				if (context.GetChild(i) is Return_statementContext)
 					break;
@@ -121,14 +121,14 @@ namespace Syntax
 
 		public override object VisitIf_statement([NotNull] If_statementContext context)
 		{
-			EvaluatableContext evaluatable = context.GetChild<EvaluatableContext>(2);
+			EvaluatableContext evaluatable = (EvaluatableContext)context.GetChild(2);
 
 			if (VisitEvaluatable(evaluatable).Equals(true))
-				return VisitBlock(context.GetChild<BlockContext>(4));
+				return VisitBlock((BlockContext)context.GetChild(4));
 			else
 			{
 				if (context.ChildCount > 6)
-					return VisitBlock(context.GetChild<BlockContext>(6));
+					return VisitBlock((BlockContext)context.GetChild(6));
 			}
 
 			return default(object);
