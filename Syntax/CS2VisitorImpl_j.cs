@@ -1,11 +1,14 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 using Antlr4.Runtime;
 using Antlr4.Runtime.Tree;
 
 namespace Syntax
 {
     // ReSharper disable once InconsistentNaming
-	partial class CS2VisitorImpl
+    partial class CS2VisitorImpl
     {
         public override object VisitString_constant(CS2Parser.String_constantContext context)
         {
@@ -15,8 +18,40 @@ namespace Syntax
         public override object VisitFunction_call(CS2Parser.Function_callContext context)
         {
             var id = context.ID();
-            CS2Parser.Function_declarationContext function = (CS2Parser.Function_declarationContext) functionHolder[id.GetText()];
-            return Visit(function.block());
+
+            var arguments = new List<object>();
+
+            foreach (var argumentContext in context.argument())
+            {
+                object value;
+
+                if (argumentContext.ID() != null)
+                    value = contextHolder.GetEffective()[argumentContext.ID().GetText()].Value;
+                else
+                    value = Visit(argumentContext.GetChild(0));
+
+                arguments.Add(value);
+            }
+
+            return ExecuteFunction(id.GetText(), arguments);
+        }
+
+        public object ExecuteFunction(string functionName, params object[] arguments)
+        {
+            object returnValue;
+            var function = (CS2Parser.Function_declarationContext) functionHolder[functionName];
+            contextHolder.PushFrame();
+            {
+                var parameterList = (IList<string>) Visit(function.parameter_list());
+                for (var index = 0; index < arguments.Length; index++)
+                {
+                    contextHolder.GetEffective()[parameterList[index]].Value = arguments[index];
+                }
+
+                returnValue = Visit(function.block());
+            }
+            contextHolder.PopFrame();
+            return returnValue;
         }
 
         public override object VisitArgument(CS2Parser.ArgumentContext context)
@@ -86,6 +121,7 @@ namespace Syntax
         IntArray,
         DoubleArray
     }
+
     internal enum UnaryOperator
     {
         Increment,
