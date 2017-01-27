@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Syntax
 {
-    partial class EvalVisitor : CS2BaseVisitor<System.Object>
+    partial class CS2VisitorImpl : CS2BaseVisitor<Object>
     {
         /// <summary>
         /// Visit a parse tree produced by <see cref="CS2Parser.relational_operation"/>.
@@ -18,12 +18,12 @@ namespace Syntax
         /// </summary>
         /// <param name="context">The parse tree.</param>
         /// <return>The visitor result.</return>
-        public override System.Object VisitRelational_operation([NotNull] CS2Parser.Relational_operationContext context)
+        public override Object VisitRelational_operation([NotNull] CS2Parser.Relational_operationContext context)
         {
             Boolean ret;
             Relop op = (Relop)Visit(context.children[1]);
-            System.Object left = Visit(context.children[0]);
-            System.Object right = Visit(context.children[2]);
+            Object left = Visit(context.children[0]);
+            Object right = Visit(context.children[2]);
             switch (op)
             {
                 case Relop.EQ:
@@ -55,7 +55,7 @@ namespace Syntax
         /// </summary>
         /// <param name="context">The parse tree.</param>
         /// <return>The visitor result.</return>
-        public override System.Object VisitRelop([NotNull] CS2Parser.RelopContext context)
+        public override Object VisitRelop([NotNull] CS2Parser.RelopContext context)
         {
             switch (context.children[0].GetText())
             {
@@ -82,10 +82,40 @@ namespace Syntax
         /// </summary>
         /// <param name="context">The parse tree.</param>
         /// <return>The visitor result.</return>
-        public override System.Object VisitExpression([NotNull] CS2Parser.ExpressionContext context)
+        public override Object VisitExpression([NotNull] CS2Parser.ExpressionContext context)
         {
-            //TODO: 
-            return VisitChildren(context);
+            Object result = Visit(context.children[0]);
+            for(int i=2; i<context.children.Count; i+=2)
+            {
+                string op = context.children[i - 1].GetText();
+                Object right = Visit(context.children[i]);
+                switch (op)
+                {
+                    case "+":
+                        if (result.GetType() == typeof(string))
+                        {
+                            result += (string)right;
+                        }
+                        else
+                        {
+                            result = ((Double)result) + (Double)right;
+                        }
+                        break;
+                    case "-":
+                        if (result.GetType() == typeof(string))
+                        {
+                            result += (string)right;
+                        }
+                        else
+                        {
+                            result = ((Double)result) + (Double)right;
+                        }
+                        break;
+                    default:
+                        throw new Exception("Unsupported ADD/SUB operator: " + op);
+                }
+            }
+            return result;
         }
         /// <summary>
         /// Visit a parse tree produced by <see cref="CS2Parser.multiplyingExpression"/>.
@@ -96,9 +126,25 @@ namespace Syntax
         /// </summary>
         /// <param name="context">The parse tree.</param>
         /// <return>The visitor result.</return>
-        public override System.Object VisitMultiplyingExpression([NotNull] CS2Parser.MultiplyingExpressionContext context)
+        public override Object VisitMultiplyingExpression([NotNull] CS2Parser.MultiplyingExpressionContext context)
         {
-            //TODO: 
+            Double result = (Double)Visit(context.children[0]);
+            for(int i=2; i<context.children.Count; i += 2)
+            {
+                string op = context.children[i-1].GetText();
+                Double right = (Double)Visit(context.children[i]);
+                switch (op)
+                {
+                    case "*":
+                        result *= right;
+                        break;
+                    case "/":
+                        result /= right;
+                        break;
+                    default:
+                        throw new Exception("Unsupported MULT/DIV operator: "+op);
+                }
+            }
             return VisitChildren(context);
         }
         /// <summary>
@@ -110,10 +156,22 @@ namespace Syntax
         /// </summary>
         /// <param name="context">The parse tree.</param>
         /// <return>The visitor result.</return>
-        public override System.Object VisitAtom([NotNull] CS2Parser.AtomContext context)
+        public override Object VisitAtom([NotNull] CS2Parser.AtomContext context)
         {
-            //TODO: 
-            return VisitChildren(context);
+            if (context.children.Count > 1)
+            {
+                return Visit(context.children[1]);
+            }
+            double d;
+            if (double.TryParse(context.children[0].GetText(), out d))
+            {
+                return d;
+            }
+            if (context.children[0].GetType() == typeof(CS2Parser.Function_callContext))
+            {
+                return Visit(context.children[0]);
+            }
+            return contextHolder.GetEffective()[context.children[0].GetText()];
         }
         /// <summary>
         /// Visit a parse tree produced by <see cref="CS2Parser.constant"/>.
@@ -124,8 +182,12 @@ namespace Syntax
         /// </summary>
         /// <param name="context">The parse tree.</param>
         /// <return>The visitor result.</return>
-        public override System.Object VisitConstant([NotNull] CS2Parser.ConstantContext context)
+        public override Object VisitConstant([NotNull] CS2Parser.ConstantContext context)
         {
+            if (context.children[0].GetType() == typeof(CS2Parser.Char_constantContext) || context.children[0].GetType()==typeof(CS2Parser.String_constantContext))
+            {
+                return Visit(context.children[0]);
+            }
             return Double.Parse(context.children[0].GetText());
         }
         /// <summary>
@@ -137,9 +199,9 @@ namespace Syntax
         /// </summary>
         /// <param name="context">The parse tree.</param>
         /// <return>The visitor result.</return>
-        public override System.Object VisitChar_constant([NotNull] CS2Parser.Char_constantContext context)
+        public override Object VisitChar_constant([NotNull] CS2Parser.Char_constantContext context)
         {
-            return context.children[0].GetText()[0];
+            return context.children[1].GetText()[0];
         }
 
     }
