@@ -28,13 +28,18 @@ namespace Syntax
 			CS2Parser cs2Parser = new CS2Parser(commonTokenStream);
 			ProgramContext pContext = cs2Parser.program();
 
-			Validate(pContext, 0, new Context<string, TypedVariable>());
+			if(Validate(pContext, 0, new Context<string, TypedVariable>(), false))
+            {
+                new CS2VisitorImpl().Visit(pContext);
+            }
 
 			return pContext;
 		}
 
-		private void Validate(ITree root, int indent, Context<string, TypedVariable> context)
+		private bool Validate(ITree root, int indent, Context<string, TypedVariable> context, bool printtree)
 		{
+            bool ret = true;
+            if(printtree)
 			Console.WriteLine(new string('-', indent) +
 				root.GetType() + " " + root.ToString());// (root.Payload is IToken ? ((IToken)root.Payload).Text : root.Payload));
 
@@ -47,7 +52,7 @@ namespace Syntax
 			for (int i = 0; i < root.ChildCount; i++)
 			{
 				ITree child = root.GetChild(i);
-				Validate(child, indent + 1, context);
+				ret &= Validate(child, indent + 1, context, printtree);
 			}
 
 
@@ -56,14 +61,20 @@ namespace Syntax
 			else if (root.GetType() == typeof(DeclarationContext))
 			{
 				if (!HandleDeclarationContext((DeclarationContext)root, context))
-					Console.WriteLine("Duplicate declaration");
-			}
+                {
+                    ret = false;
+                    Console.WriteLine("Duplicate declaration: " + root.ToString());
+                }
+            }
 			// Run this after the enumeration so that declarations are proccessed
 			// before assignments
 			else if (root.GetType() == typeof(AssignmentContext))
 			{
-				if (!EvaluateAssignmentContext((AssignmentContext)root, context))
-					Console.WriteLine("Invalid assignment");
+                if (!EvaluateAssignmentContext((AssignmentContext)root, context))
+                {
+                    ret = false;
+                    Console.WriteLine("Invalid assignment: " + root.ToString());
+                }
 			}
 
 			if (root.GetType() == typeof(Function_declarationContext) ||
@@ -71,6 +82,7 @@ namespace Syntax
 			{
 				context.PopFrame();
 			}
+            return ret;
 		}
 
 		private void HandleParameterContext(ParameterContext value, Context<string, TypedVariable> context)

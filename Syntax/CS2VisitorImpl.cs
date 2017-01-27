@@ -7,57 +7,66 @@ using static CS2Parser;
 
 namespace Syntax
 {
-	partial class CS2VisitorImpl : CS2BaseVisitor<Object>
+	partial class CS2VisitorImpl : CS2BaseVisitor<object>
 	{
 		private Context<string, TypedVariable> contextHolder = new Context<string, TypedVariable>();
-		private Dictionary<string, ITree> functionHolder = new Dictionary<string, ITree>();
+		private Dictionary<string, IParseTree> functionHolder = new Dictionary<string, IParseTree>();
 
-		public override Object VisitDeclaration([NotNull] DeclarationContext context)
+		public override object VisitProgram([NotNull] ProgramContext context)
 		{
-			string type = context.GetChild(0).GetChild(0).ToString();
+			for (int i = 0; i < context.ChildCount; i++)
+				Visit(context.GetChild(i));
+
+			// TODO: Call functionHolder["Main"]
+
+			return default(object);
+		}
+
+		public override object VisitDeclaration([NotNull] DeclarationContext context)
+		{
+			string type = VisitType((TypeContext)context.GetChild(0)).ToString();
+			string name = null;
 
 			for (int i = 1; i < context.ChildCount; i++)
 			{
-				IParseTree name = context.GetChild(i);
+				name = context.GetChild(i).ToString();
 
-				if (name.ToString() != ",")
+				if (name != ",")
 				{
-					contextHolder.AddToCurrent(name.ToString(),
-						new TypedVariable() { Type = type, Name = name.ToString() });
+					contextHolder.AddToCurrent(name,
+						new TypedVariable() { Type = type, Name = name });
 				}
 			}
 
-			return default(Object);
+			return name;
 		}
 
-		public override Object VisitFunction_declaration([NotNull] Function_declarationContext context)
+		public override object VisitFunction_declaration([NotNull] Function_declarationContext context)
 		{
 			int index = 0;
 
 			if (context.GetChild(index) is ModContext)
 			{
-				VisitMod(context.GetChild<ModContext>(index));
+				VisitMod((ModContext)context.GetChild(index));
 				index++;
 			}
 
-			string type = context.GetChild(index++).GetChild(0).ToString();
+			string type = VisitType((TypeContext)context.GetChild(index++)).ToString();
 			string name = context.GetChild(index++).ToString();
 
 			functionHolder.Add(name, context);
 
-			return default(Object);
+			return default(object);
 		}
 
-		public override Object VisitMod([NotNull] ModContext context)
+		public override object VisitMod([NotNull] ModContext context)
 		{
-			string mod = context.GetChild(0).ToString();
-
-			return default(Object);
+			return context.GetChild(0).ToString();
 		}
 
-		public override Object VisitStatement([NotNull] StatementContext context)
+		public override object VisitStatement([NotNull] StatementContext context)
 		{
-			RuleContext child0 = context.GetChild<RuleContext>(0);
+			RuleContext child0 = (RuleContext)context.GetChild(0);
 			Type child0Type = child0.GetType();
 
 			if (child0Type == typeof(For_loopContext))
@@ -80,38 +89,49 @@ namespace Syntax
 			throw new InvalidOperationException();
 		}
 
-		public override Object VisitReturn_statement([NotNull] Return_statementContext context)
+		public override object VisitReturn_statement([NotNull] Return_statementContext context)
 		{
-			RuleContext child1 = context.GetChild<RuleContext>(1);
+			RuleContext child1 = (RuleContext)context.GetChild(1);
 
 			if (child1 is EvaluatableContext)
 				return VisitEvaluatable((EvaluatableContext)child1);
 
-			return default(Object);
+			return default(object);
 		}
 
-		public override Object VisitBlock([NotNull] BlockContext context)
+		public override object VisitBlock([NotNull] BlockContext context)
 		{
+			contextHolder.PushFrame();
+
+			object result = default(object);
+
 			// Skip the open and closing braces
 			for (int i = 1; i < context.ChildCount - 1; i++)
-				VisitStatement(context.GetChild<StatementContext>(i));
+			{
+				result = VisitStatement((StatementContext)context.GetChild(i));
 
-			return default(Object);
+				if (context.GetChild(i) is Return_statementContext)
+					break;
+			}
+
+			contextHolder.PopFrame();
+
+			return result;
 		}
 
-		public override Object VisitIf_statement([NotNull] If_statementContext context)
+		public override object VisitIf_statement([NotNull] If_statementContext context)
 		{
-			EvaluatableContext evaluatable = context.GetChild<EvaluatableContext>(2);
+			EvaluatableContext evaluatable = (EvaluatableContext)context.GetChild(2);
 
 			if (VisitEvaluatable(evaluatable).Equals(true))
-				VisitBlock(context.GetChild<BlockContext>(4));
+				return VisitBlock((BlockContext)context.GetChild(4));
 			else
 			{
 				if (context.ChildCount > 6)
-					VisitBlock(context.GetChild<BlockContext>(6));
+					return VisitBlock((BlockContext)context.GetChild(6));
 			}
 
-			return default(Object);
-		}	
+			return default(object);
+		}
 	}
 }
