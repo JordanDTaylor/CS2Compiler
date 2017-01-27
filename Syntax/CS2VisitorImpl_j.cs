@@ -36,20 +36,24 @@ namespace Syntax
             return ExecuteFunction(id.GetText(), arguments.ToArray());
         }
 
-        public object ExecuteFunction(string functionName, params object[] arguments)
+        public object ExecuteFunction<T>(string functionName, params T[] arguments)
         {
 
             if (functionName.Equals("WriteLine"))
-                Console.WriteLine(arguments);
+            {
+                Console.WriteLine(arguments[0]);
+                return null;
+            }
+
 
             object returnValue;
             var function = (CS2Parser.Function_declarationContext) functionHolder[functionName];
             contextHolder.PushFrame();
             {
-                var parameterList = (IList<string>) Visit(function.parameter_list());
+                var parameterList = (object[])Visit(function.parameter_list());
                 for (var index = 0; index < arguments.Length; index++)
                 {
-                    contextHolder.GetEffective()[parameterList[index]].Value = arguments[index];
+                    contextHolder.GetEffective()[parameterList[index].ToString()].Value = arguments[index];
                 }
 
                 returnValue = Visit(function.block());

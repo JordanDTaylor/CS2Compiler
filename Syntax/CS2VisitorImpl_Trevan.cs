@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Antlr4.Runtime.Tree;
 
 namespace Syntax
 {
@@ -145,7 +146,7 @@ namespace Syntax
                         throw new Exception("Unsupported MULT/DIV operator: "+op);
                 }
             }
-            return VisitChildren(context);
+            return result;
         }
         /// <summary>
         /// Visit a parse tree produced by <see cref="CS2Parser.atom"/>.
@@ -171,7 +172,7 @@ namespace Syntax
             {
                 return Visit(context.children[0]);
             }
-            return contextHolder.GetEffective()[context.children[0].GetText()];
+            return contextHolder.GetEffective()[context.children[0].GetText()].Value;
         }
         /// <summary>
         /// Visit a parse tree produced by <see cref="CS2Parser.constant"/>.
