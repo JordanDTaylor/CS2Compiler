@@ -25,19 +25,20 @@ namespace Syntax
 		public override object VisitDeclaration([NotNull] DeclarationContext context)
 		{
 			string type = VisitType(context.GetChild<TypeContext>(0)).ToString();
+			string name = null;
 
 			for (int i = 1; i < context.ChildCount; i++)
 			{
-				IParseTree name = context.GetChild(i);
+				name = context.GetChild(i).ToString();
 
-				if (name.ToString() != ",")
+				if (name != ",")
 				{
-					contextHolder.AddToCurrent(name.ToString(),
-						new TypedVariable() { Type = type, Name = name.ToString() });
+					contextHolder.AddToCurrent(name,
+						new TypedVariable() { Type = type, Name = name });
 				}
 			}
 
-			return default(object);
+			return name;
 		}
 
 		public override object VisitFunction_declaration([NotNull] Function_declarationContext context)
