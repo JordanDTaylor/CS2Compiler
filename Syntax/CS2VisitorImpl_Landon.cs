@@ -73,7 +73,12 @@ namespace Syntax
         /// <return>The visitor result.</return>
         public override Object VisitParameter([NotNull] CS2Parser.ParameterContext context)
         {
-
+            var id = context.children[1].GetText();
+            var typedVar = new TypedVariable();
+            typedVar.Name = id;
+            typedVar.Type = context.children[0].GetText();
+            contextHolder.AddToCurrent(id, typedVar);
+            return id;
         }
         /// <summary>
         /// Visit a parse tree produced by <see cref="CS2Parser.assignment"/>.
@@ -86,7 +91,16 @@ namespace Syntax
         /// <return>The visitor result.</return>
         public override Object VisitAssignment([NotNull] CS2Parser.AssignmentContext context)
         {
+            // (declaration | ID) '=' evaluatable ';'
+            String name;
+            var firstChild = context.children[0];
+            if (firstChild.GetType() == typeof(CS2Parser.DeclarationContext))
+                name = Visit((CS2Parser.DeclarationContext)firstChild).ToString();
+            else
+                name = firstChild.GetText();
+            contextHolder.GetEffective()[name].Value = Visit(context.children[2]);
 
+            return null;
         }
         /// <summary>
         /// Visit a parse tree produced by <see cref="CS2Parser.evaluatable"/>.
@@ -99,7 +113,11 @@ namespace Syntax
         /// <return>The visitor result.</return>
         public override Object VisitEvaluatable([NotNull] CS2Parser.EvaluatableContext context)
         {
-
+            var id = context.ID();
+            if (id == null)
+                return Visit(context.children[0]);
+            else
+                return contextHolder.GetEffective()[id.GetText()];
         }
         /// <summary>
         /// Visit a parse tree produced by <see cref="CS2Parser.operation"/>.
