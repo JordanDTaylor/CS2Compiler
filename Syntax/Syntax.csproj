@@ -144,6 +144,9 @@
     <None Include="gen\CS2.tokens" />
     <None Include="gen\CS2Lexer.tokens" />
     <None Include="packages.config" />
+    <None Include="sqrt.cs2">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
