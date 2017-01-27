@@ -142,6 +142,8 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Relop.cs" />
     <Compile Include="TypedVariable.cs" />
+    <Compile Include="TypeToken.cs" />
+    <Compile Include="UnaryOperator.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
