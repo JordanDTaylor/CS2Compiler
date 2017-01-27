@@ -109,7 +109,7 @@ namespace Syntax
                         }
                         else
                         {
-                            result = ((Double)result) + (Double)right;
+                            result = ((Double)result) - (Double)right;
                         }
                         break;
                     default:
