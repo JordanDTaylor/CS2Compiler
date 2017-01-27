@@ -31,6 +31,7 @@ namespace Syntax
 			if(Validate(pContext, 0, new Context<string, TypedVariable>(), false))
             {
                 new CS2VisitorImpl().Visit(pContext);
+                //new CS2VisitorAsm("sqrt.asm").Visit(pContext);
             }
 
 			return pContext;
