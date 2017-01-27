@@ -14,7 +14,7 @@ namespace Syntax
 		private Dictionary<string, IParseTree> functionHolder = new Dictionary<string, IParseTree>();
         private TextWriter output;
 
-        public CS2VisitorAsm(String outfilnam)
+        public CS2VisitorAsm(string outfilnam)
         {
              output = new StreamWriter(outfilnam);
         }

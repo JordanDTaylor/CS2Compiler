@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using Antlr4.Runtime;
-using Antlr4.Runtime.Tree;
 
 namespace Syntax
 {
@@ -17,8 +14,6 @@ namespace Syntax
 
         public override object VisitFunction_call(CS2Parser.Function_callContext context)
         {
-            var id = context.ID();
-
             var arguments = new List<object>();
 
             foreach (var argumentContext in context.argument())
@@ -33,7 +28,7 @@ namespace Syntax
                 arguments.Add(value);
             }
 
-            return ExecuteFunction(id.GetText(), arguments.ToArray());
+            return ExecuteFunction(context.ID().GetText(), arguments.ToArray());
         }
 
         public object ExecuteFunction<T>(string functionName, params T[] arguments)

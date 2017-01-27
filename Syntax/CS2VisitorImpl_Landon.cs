@@ -1,19 +1,15 @@
 ﻿using Antlr4.Runtime.Misc;
-using Antlr4.Runtime.Tree;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Antlr4.Runtime.Tree;
 
 namespace Syntax
 {
-    partial class CS2VisitorImpl : CS2BaseVisitor<object>
+    partial class CS2VisitorImpl
     {
         /// <summary>
         /// Visit a parse tree produced by <see cref="CS2Parser.for_loop"/>.
         /// <para>
-        /// The default implementation returns the result of calling <see cref="AbstractParseTreeVisitor{Object}.VisitChildren(IRuleNode)"/>
+        /// The default implementation returns the result of calling <see cref="AbstractParseTreeVisitor{Result}.VisitChildren(IRuleNode)"/>
         /// on <paramref name="context"/>.
         /// </para>
         /// </summary>
@@ -21,9 +17,9 @@ namespace Syntax
         /// <return>The visitor result.</return>
         public override object VisitFor_loop([NotNull] CS2Parser.For_loopContext context)
         {
-            Visit(context.children[2]);
-            for (; (bool)Visit(context.children[3]); Visit(context.children[5]))
-                Visit(context.children[7]);
+            Visit(context.GetChild(2));
+            for (; (bool)Visit(context.GetChild(3)); Visit(context.GetChild(5)))
+                Visit(context.GetChild(7));
             return null;
         }
         /// <summary>
@@ -37,8 +33,8 @@ namespace Syntax
         /// <return>The visitor result.</return>
         public override object VisitWhile_loop([NotNull] CS2Parser.While_loopContext context)
         {
-            while ((bool)Visit(context.children[2]))
-                Visit(context.children[4]);
+            while ((bool)Visit(context.GetChild(2)))
+                Visit(context.GetChild(4));
             return null;
         }
         /// <summary>
@@ -57,7 +53,7 @@ namespace Syntax
 
             for(int i=0; i<childCount; i++)
             {
-                paramaters[i] = Visit(context.children[i]);
+                paramaters[i] = Visit(context.GetChild(i));
             }
 
             return paramaters;
@@ -73,11 +69,11 @@ namespace Syntax
         /// <return>The visitor result.</return>
         public override object VisitParameter([NotNull] CS2Parser.ParameterContext context)
         {
-            var id = context.children[1].GetText();
+            var id = context.GetChild(1).GetText();
             var typedVar = new TypedVariable
             {
                 Name = id,
-                Type = context.children[0].GetText()
+                Type = context.GetChild(0).GetText()
             };
             contextHolder.AddToCurrent(id, typedVar);
             return id;
@@ -95,12 +91,12 @@ namespace Syntax
         {
             // (declaration | ID) '=' evaluatable ';'
             string name;
-            var firstChild = context.children[0];
+            var firstChild = context.GetChild(0);
             if (firstChild.GetType() == typeof(CS2Parser.DeclarationContext))
                 name = Visit((CS2Parser.DeclarationContext)firstChild).ToString();
             else
                 name = firstChild.GetText();
-            contextHolder.GetEffective()[name].Value = Visit(context.children[2]);
+            contextHolder.GetEffective()[name].Value = Visit(context.GetChild(2));
 
             return null;
         }
@@ -117,10 +113,11 @@ namespace Syntax
         {
             var id = context.ID();
             if (id == null)
-                return Visit(context.children[0]);
+                return Visit(context.GetChild(0));
             else
                 return contextHolder.GetEffective()[id.GetText()].Value;
         }
+ 
         /// <summary>
         /// Visit a parse tree produced by <see cref="CS2Parser.operation"/>.
         /// <para>
@@ -132,8 +129,9 @@ namespace Syntax
         /// <return>The visitor result.</return>
         public override object VisitOperation([NotNull] CS2Parser.OperationContext context)
         {
-            return Visit(context.children[0]);
+            return Visit(context.GetChild(0));
         }
+
         /// <summary>
         /// Visit a parse tree produced by <see cref="CS2Parser.unary_operation"/>.
         /// <para>
@@ -144,31 +142,21 @@ namespace Syntax
         /// <param name="context">The parse tree.</param>
         /// <return>The visitor result.</return>
         public override object VisitUnary_operation([NotNull] CS2Parser.Unary_operationContext context)
-        { // TODO value needs to be updated in the dictionary.
+        { 
             /*
                 unary_operation
                     : (pre_unary_operator expression)
             | (expression post_unary_operator)
             ;
             */
-            IParseTree child0 = context.children[0];
-            IParseTree child1 = context.children[1];
-            double value;
-            UnaryOperator opp;
-
 
             var id = context.expression().GetText();
 
-            if (child0.GetType() == typeof(CS2Parser.Pre_unary_operatorContext)) // pre_unary_operator expression
-            {
-                opp = (UnaryOperator) Visit(context.pre_unary_operator()); 
-                value = (double)Visit(child1);
-            }
-            else // expression post_unary_operator
-            {
-                value = (double)Visit(child0);
-                opp = (UnaryOperator)Visit(context.post_unary_operator());
-            }
+            var opp = context.pre_unary_operator() != null
+                ? (UnaryOperator) Visit(context.pre_unary_operator())
+                : (UnaryOperator) Visit(context.post_unary_operator());
+
+            var value = (double) Visit(context.expression());
 
             switch (opp)
             {
