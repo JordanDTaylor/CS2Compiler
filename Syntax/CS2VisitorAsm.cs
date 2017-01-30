@@ -13,24 +13,38 @@ namespace Syntax
 		private Context<string, TypedVariable> contextHolder = new Context<string, TypedVariable>();
 		private Dictionary<string, IParseTree> functionHolder = new Dictionary<string, IParseTree>();
         private TextWriter output;
+        private string outfilnam;
 
-        public CS2VisitorAsm(string outfilnam)
+        public CS2VisitorAsm(string asmfilename)
         {
-             output = new StreamWriter(outfilnam);
-        }
-        ~CS2VisitorAsm()
-        {
-            output.Close();
+            outfilnam = asmfilename;
         }
 
-		public override object VisitProgram([NotNull] ProgramContext context)
+        public override object VisitProgram([NotNull] ProgramContext context)
 		{
-			for (int i = 0; i < context.ChildCount; i++)
+            output = new StreamWriter(outfilnam);
+            output.WriteLine("section .text");//instructions
+            output.WriteLine("global _start");
+
+            for (int i = 0; i < context.ChildCount; i++)
 				Visit(context.GetChild(i));
 
-		    ExecuteFunction("Main", new string[0]);
+            //ExecuteFunction("Main", new string[0]);
 
-			return default(object);
+            output.WriteLine();
+            output.WriteLine("section .data");//constants
+
+            output.WriteLine();
+            output.WriteLine("section .bss");//variables
+            foreach(var v in contextHolder.GetEffective())
+            {
+                //TODO: get actual size of the type
+                output.WriteLine(v.Key + " RESB 8");//reserve byte[8]
+            }
+
+            output.Flush();
+            output.Dispose();
+            return default(object);
 		}
 
 		public override object VisitDeclaration([NotNull] DeclarationContext context)
@@ -64,8 +78,14 @@ namespace Syntax
 
 			string type = VisitType((TypeContext)context.GetChild(index++)).ToString();
 			string name = context.GetChild(index++).ToString();
+            output.WriteLine();
+            if (name == "Main")
+            {
+                output.WriteLine("_start:");
+            }
+            output.WriteLine(name + ":");
 
-			functionHolder.Add(name, context);
+            functionHolder.Add(name, context);
 
 			return default(object);
 		}

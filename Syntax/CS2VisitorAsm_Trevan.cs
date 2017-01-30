@@ -25,23 +25,30 @@ namespace Syntax
             bool ret;
             Relop op = (Relop)Visit(context.GetChild(1));
             object left = Visit(context.GetChild(0));
+            output.WriteLine("MOV edx, eda");//if visit stores its result in eda and does not overwrite edx
             object right = Visit(context.GetChild(2));
+
             switch (op)
             {
                 case Relop.EQ:
                     ret = left.Equals(right);
+                    output.WriteLine("CMPEQSD edx, eda");//compare scalar doubles edx==eda, pseudo op to CMPSD edx, eda, 0
                     break;
                 case Relop.LT:
                     ret = ((IComparable)left).CompareTo(right) < 0;
+                    output.WriteLine("CMPLTSD edx, eda");//compare scalar doubles edx<eda, pseudo op to CMPSD edx, eda, 1
                     break;
                 case Relop.GT:
                     ret = ((IComparable)left).CompareTo(right) > 0;
+                    output.WriteLine("CMPNLESD edx, eda");//compare scalar doubles edx>eda, pseudo op to CMPSD edx, eda, 6
                     break;
                 case Relop.LE:
                     ret = ((IComparable)left).CompareTo(right) <= 0;
+                    output.WriteLine("CMPLESD edx, eda");//compare scalar doubles edx<=eda, pseudo op to CMPSD edx, eda, 2
                     break;
                 case Relop.GE:
                     ret = ((IComparable)left).CompareTo(right) >= 0;
+                    output.WriteLine("CMPNLTSD edx, eda");//compare scalar doubles edx>=eda, pseudo op to CMPSD edx, eda, 5
                     break;
                 default:
                     throw new Exception("Unsupported relational operator: " + op);
